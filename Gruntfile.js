@@ -1,8 +1,33 @@
 module.exports = function(grunt) {
 
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-nodemon');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
+
     concat: {
+      options: {
+        separator: '\n'
+      },
+      dist: {
+        src: [
+          'public/client/app.js',
+          'public/client/link.js',
+          'public/client/links.js',
+          'public/client/linkView.js',
+          'public/client/linksView.js',
+          'public/client/createLinkView.js',
+          'public/client/router.js'
+        ],
+        dest: 'public/client/app.concat.js'
+      }
     },
 
     mochaTest: {
@@ -21,14 +46,21 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      my_target:{
+        files: {
+          'dist/app.min.js' : ['public/client/app.concat.js']
+        }
+      }
     },
 
     jshint: {
-      files: [
-        // Add filespec list here
-      ],
+      files: ['views/**/*.js',
+              'public/**/*.js',
+              'app/**/*.js',
+              'lib/**/*.js',
+              '*.js'], // ../**/*.js
       options: {
-        force: 'true',
+        // force: 'false',
         jshintrc: '.jshintrc',
         ignores: [
           'public/lib/**/*.js',
@@ -63,14 +95,6 @@ module.exports = function(grunt) {
     },
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-  grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-shell');
-  grunt.loadNpmTasks('grunt-nodemon');
 
   grunt.registerTask('server-dev', function (target) {
     // Running nodejs in a different process and displaying output on the main console
@@ -93,6 +117,10 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
+  grunt.registerTask('c', ['concat']);
+
+  grunt.registerTask('u', ['uglify']);
+
   grunt.registerTask('build', [
   ]);
 
@@ -106,6 +134,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
     // add your deploy tasks here
+    'concat',
+    'jshint',
+    'uglify',
+    'mochaTest'
   ]);
 
 
