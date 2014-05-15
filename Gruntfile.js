@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     uglify: {
       my_target:{
         files: {
-          'dist/app.min.js' : ['public/client/app.concat.js']
+          'public/dist/app.min.js' : ['public/client/app.concat.js']
         }
       }
     },
@@ -70,6 +70,11 @@ module.exports = function(grunt) {
     },
 
     cssmin: {
+      minify: {
+        src: ['public/style.css'],
+        dest: 'public/dist/style.min.css',
+        ext: '.min.css'
+      }
     },
 
     watch: {
@@ -137,6 +142,7 @@ module.exports = function(grunt) {
     'concat',
     'jshint',
     'uglify',
+    'cssmin',
     'mochaTest'
   ]);
 
