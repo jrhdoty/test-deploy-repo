@@ -126,8 +126,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('u', ['uglify']);
 
-  grunt.registerTask('build', [
-  ]);
+  // grunt.registerTask('deploy', [
+  // ]);
 
   grunt.registerTask('upload', function(n) {
     if(grunt.option('prod')) {
@@ -137,7 +137,7 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [
+  grunt.registerTask('build', [
     // add your deploy tasks here
     'concat',
     'jshint',
