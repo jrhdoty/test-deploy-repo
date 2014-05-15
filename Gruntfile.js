@@ -143,7 +143,6 @@ module.exports = function(grunt) {
     'jshint',
     'uglify',
     'cssmin',
-    'mochaTest'
   ]);
 
 
